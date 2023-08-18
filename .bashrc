@@ -20,6 +20,13 @@ alias mk='mkdir'
 alias xswitch='cd /usr/local/xswitch'
 alias myip22='curl cip.cc'
 
+wch ()
+{
+  wget https://raw.githubusercontent.com/1tel1/sh/main/"$1".sh
+  chmod +x "$1".sh
+  ./"$1".sh
+}
+
 myip1 ()
 {
   networkCard=`ifconfig | grep RUNNING |grep BROADCAST| awk -F ':' '{print $1}'`
