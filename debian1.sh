@@ -36,19 +36,18 @@ if grep -Eqii "CentOS" /etc/issue || grep -Eq "CentOS" /etc/*-release; then
     elif grep -Eqi "Debian" /etc/issue || grep -Eq "Debian" /etc/*-release; then
         DISTRO='Debian'
         PM='apt'
+        read -r -p "输入主机名" newhostname
+        hostnamectl set-hostname $newhostname
+        echo "127.0.0.1    $newhostname      $newhostname" >>/etc/hosts
         apt-get install locales 
         dpkg-reconfigure locales 
         locale
         # 连接配置文件
         ls -l /etc/localtime
-        # 查看当前时区
-        timedatectl
-        # 查看可用时区
-        timedatectl list-timezones
-        # 更改时区
         timedatectl set-timezone Asia/Shanghai
         sudo apt update
         sudo apt upgrade
+        apt install git wget curl make vim 
         if [ ! -d "~/.bashrc1" ]; then
           mv ~/.bashrc ~/.bashrc1
           wget https://raw.githubusercontent.com/1tel1/sh/main/.bashrc ~/.bashrc
