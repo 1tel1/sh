@@ -5,9 +5,9 @@ if grep -Eqii "CentOS" /etc/issue || grep -Eq "CentOS" /etc/*-release; then
         yum install kde-l10n-Chinese
         yum reinstall glibc-common
         mv /etc/locale.conf /etc/locale.conf1
-        cat>/etc/locale.conf<<EOF  
-        LANG=zh_CN.UTF-8
-        EOF
+cat>/etc/locale.conf<<EOF  
+LANG=zh_CN.UTF-8
+EOF
         # 连接配置文件
         ls -l /etc/localtime
         # 查看当前时区
