@@ -19,6 +19,50 @@ PS1="${debian_chroot:+($debian_chroot)}\[\e[35;1m\]\u\[\e[0m\]*\[\e[35;1m\]\h\[\
 alias mk='mkdir'
 alias xswitch='cd /usr/local/xswitch'
 alias myip22='curl cip.cc'
+fang ()
+{
+  fang= "没有防火强"
+  ufw status
+  if [ $? -eq 0 ]; then
+      fang = "防火强：ufw"
+  fi
+  iptables -L --line-numbers
+  if [ $? -eq 0 ]; then
+      fang = "防火强：iptables"
+  fi
+  echo "$fang"
+}
+hei1 ()
+{
+ firewall-cmd --permanent --add-rich-rule='rule family=ipv4 source address="$1" drop'
+ iptables -I INPUT -s "$1" -j DROP
+ sudo ufw deny from "$1"
+}
+
+hei2 ()
+{
+ echo "只需要输入a.b.c.d中的a.b"
+ firewall-cmd --permanent --add-rich-rule='rule family=ipv4 source address="$1.0.0/16" drop'
+ iptables -I INPUT -s "$1".0.0/16 -j DROP
+ sudo ufw deny from "$1".0.0/16
+}
+
+bai ()
+{
+ firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="$1" accept"
+ iptables -D INPUT -s "$1" -j DROP
+ sudo ufw allow from "$1"
+}
+
+hei-ufw ()
+{
+ sudo ufw deny from "$1"/24
+}
+
+bai-ufw ()
+{
+  sudo ufw allow from "$1"/24
+}
 
 wch ()
 {
