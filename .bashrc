@@ -4,7 +4,7 @@
 # need this unless you want different defaults for root.
 # PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
 # umask 022
-PS1="${debian_chroot:+($debian_chroot)}\[\e[35;1m\]\u\[\e[0m\]*\[\e[35;1m\]\h\[\e[33;1m\]>>>\[\e[0m\]"
+PS1="${debian_chroot:+($debian_chroot)}\[\e[35;1m\]\u\[\e[0m\]*\[\e[35;1m\]\W\[\e[33;1m\]>>>\[\e[0m\]"
 # You may uncomment the following lines if you want `ls' to be colorized:
 # export LS_OPTIONS='--color=auto'
 # eval "$(dircolors)"
