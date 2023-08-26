@@ -17,4 +17,4 @@ echo "alias d-im='docker images' " >> ~/.bashrc
 echo "alias d-ps='docker ps' " >> ~/.bashrc
 echo "alias d-cu='docker-compose up -d' " >> ~/.bashrc
 echo "alias d-do='docker-compose down' " >> ~/.bashrc
-source ~/.bash
+source ~/.bashrc
