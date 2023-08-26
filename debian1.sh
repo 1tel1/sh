@@ -47,7 +47,9 @@ EOF
         timedatectl set-timezone Asia/Shanghai
         sudo apt update
         sudo apt upgrade
-        apt install git wget curl make vim 
+        apt install sudo 
+        apt install  net-tools
+        apt install git wget curl make vim lsof
         if [ ! -d "~/.bashrc1" ]; then
           mv ~/.bashrc ~/.bashrc1
           wget https://raw.githubusercontent.com/1tel1/sh/main/.bashrc ~/.bashrc
