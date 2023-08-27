@@ -37,9 +37,11 @@ EOF
     elif grep -Eqi "Debian" /etc/issue || grep -Eq "Debian" /etc/*-release; then
         DISTRO='Debian'
         PM='apt'
+        ip1= curl ifconfig.me
         read -r -p "输入主机名" newhostname
         hostnamectl set-hostname $newhostname
         echo "127.0.0.1    $newhostname      $newhostname" >>/etc/hosts
+        echo "$ip1 $newhostname      $newhostname" >>/etc/hosts
         apt-get install locales 
         dpkg-reconfigure locales 
         locale
