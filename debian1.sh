@@ -58,6 +58,7 @@ EOF
           wget https://raw.githubusercontent.com/1tel1/sh/main/.bashrc ~/.bashrc
           source ~/.bashrc
         fi
+        source ~/.bashrc
     elif grep -Eqi "Ubuntu" /etc/issue || grep -Eq "Ubuntu" /etc/*-release; then
         DISTRO='Ubuntu'
         PM='apt'
