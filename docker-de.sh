@@ -13,6 +13,7 @@ chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 echo "alias d-st='docker stop' " >> ~/.bashrc
 echo "alias d-rm='docker rm' " >> ~/.bashrc
+echo "alias d-ri='docker rmi' " >> ~/.bashrc
 echo "alias d-im='docker images' " >> ~/.bashrc
 echo "alias d-ps='docker ps' " >> ~/.bashrc
 echo "alias d-cu='docker-compose up -d' " >> ~/.bashrc
