@@ -1,0 +1,40 @@
+
+sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+service sshd restart
+apt-get update && apt-get upgrade -y 
+apt-get install gnupg2 -y
+wget -qO - https://packages.sury.org/php/apt.gpg | sudo apt-key add -
+echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php7.x.list
+apt-get update && apt-get upgrade -y
+apt-get install -y build-essential linux-headers-`uname -r` openssh-server apache2 mariadb-server\
+  mariadb-client bison flex php7.4 php7.4-curl php7.4-cli php7.4-common php7.4-mysql php7.4-gd php7.4-mbstring\
+  php7.4-intl php7.4-xml php-pear curl sox libncurses5-dev libssl-dev mpg123 libxml2-dev libnewt-dev sqlite3\
+  libsqlite3-dev pkg-config automake libtool autoconf git unixodbc-dev uuid uuid-dev
+apt-get install -y libasound2-dev libogg-dev libvorbis-dev libicu-dev libcurl4-openssl-dev libical-dev libneon27-dev libsrtp2-dev\
+  libspandsp-dev sudo subversion libtool-bin python-dev unixodbc dirmngr sendmail-bin sendmail
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+sudo apt-get install -y nodejs
+reboot
+cd /usr/src/
+wget https://wiki.freepbx.org/download/attachments/202375584/libssl1.0.2_1.0.2u-1_deb9u4_amd64.deb
+wget https://wiki.freepbx.org/download/attachments/122487323/mariadb-connector-odbc_3.0.7-1_amd64.deb
+dpkg -i libssl1.0.2_1.0.2u-1_deb9u4_amd64.deb
+dpkg -i mariadb-connector-odbc_3.0.7-1_amd64.deb
+apt-get install linux-headers-$(uname -r)
+cd /usr/src
+wget http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-16-current.tar.gz
+wget http://downloads.asterisk.org/pub/telephony/dahdi-linux-complete/dahdi-linux-complete-current.tar.gz
+wget https://downloads.asterisk.org/pub/telephony/libpri/libpri-1-current-patch.tar.gz
+cd /usr/src
+tar xvfz dahdi-linux-complete-current.tar.gz
+rm -f dahdi-linux-complete-current.tar.gz
+cd dahdi-*
+make all
+make install
+make install-config
+cd /usr/src
+tar xvfz libpri-1-current-patch.tar.gz
+rm -f libpri-1-current-patch.tar.gz
+cd libpri-1.6.1-patch
+make
+make install
