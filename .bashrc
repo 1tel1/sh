@@ -66,7 +66,7 @@ bai-ufw ()
 
 jia ()
 {
-  wget https://raw.githubusercontent.com/1tel1/sh/main/"$1".sh
+  wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/"$1".sh
   chmod +x "$1".sh
   ./"$1".sh
 }
