@@ -22,9 +22,9 @@ EOF
         if [ ! -d "~/.bashrc1" ]; then
           mv ~/.bashrc ~/.bashrc1
           wget https://raw.githubusercontent.com/1tel1/sh/main/.centos-bashrc ~/.bashrc
-          source ~/.bashrc
+          
         fi
-        
+        source ~/.bashrc
     elif grep -Eqi "Red Hat Enterprise Linux Server" /etc/issue || grep -Eq "Red Hat Enterprise Linux Server" /etc/*-release; then
         DISTRO='RHEL'
         PM='yum'
