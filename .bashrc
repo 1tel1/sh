@@ -64,7 +64,7 @@ bai-ufw ()
   sudo ufw allow from "$1"/24
 }
 
-wch ()
+jia ()
 {
   wget https://raw.githubusercontent.com/1tel1/sh/main/"$1".sh
   chmod +x "$1".sh
