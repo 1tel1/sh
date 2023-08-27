@@ -18,6 +18,7 @@ EOF
         timedatectl set-timezone Asia/Shanghai
         yum update
         yum upgrade
+        rm -rf ~/.bashrc1
         if [ ! -d "~/.bashrc1" ]; then
           mv ~/.bashrc ~/.bashrc1
           wget https://raw.githubusercontent.com/1tel1/sh/main/.centos-bashrc ~/.bashrc
