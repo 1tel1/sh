@@ -26,10 +26,10 @@ elif grep -Eqi "Raspbian" /etc/issue || grep -Eq "Raspbian" /etc/*-release; then
 else
     DISTRO='unknow'
 fi
-if [ ${PM} ="apt" ]; then
-  wget https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
-  chmod +x debian.sh && ./debian.sh
-elif [ ${PM} ="yum" ]; then
-  wget https://raw.githubusercontent.com/1tel1/sh/main/centos.sh
-  chmod +x centos.sh && ./centos.sh
-fi
+# if [ ${PM} ="apt" ]; then
+#   wget https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
+#   chmod +x debian.sh && ./debian.sh
+# elif [ ${PM} ="yum" ]; then
+#   wget https://raw.githubusercontent.com/1tel1/sh/main/centos.sh
+#   chmod +x centos.sh && ./centos.sh
+# fi
