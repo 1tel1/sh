@@ -20,5 +20,6 @@ mv ~/.bashrc ~/.bashrc1
 wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/.bashrc 
 mv .bashrc ~/.bashrc
 source ~/.bashrc
-echo -e "\n$(date "+%T") \t 脚本终止"
+sudo rm -rf 1.sh debian.sh
+echo -e "\n$(date "+%T") \t happy"
 
