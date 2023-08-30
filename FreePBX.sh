@@ -28,9 +28,9 @@ else
 	echo "开始安装MariaDB"
 fi
 sudo apt -y install mariadb-server mariadb-client
-sudo systemctl start mariadb
-sudo systemctl enable mariadb
-sudo mysql_secure_installation 
+# sudo systemctl start mariadb
+# sudo systemctl enable mariadb
+# sudo mysql_secure_installation 
 if [ $? -eq 0 ]; then
     echo "MariaDB 成功"
     my = " ${my}
@@ -93,7 +93,7 @@ sudo apt install libapache2-mod-php7.4
 sudo sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php/7.4/apache2/php.ini
 sudo sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php/7.4/cli/php.ini
 sed -i 's/\(^memory_limit = \).*/\1256M/' /etc/php/7.4/apache2/php.ini
-wget https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+wget https://niu.tel-com.cc/switch/ioncube_loaders_lin_x86-64.tar.gz
 tar -xvzf ioncube_loaders_lin_x86-64.tar.gz
 php -i | grep extension_dir
 cd ioncube
