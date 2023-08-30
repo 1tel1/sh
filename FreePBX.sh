@@ -4,11 +4,16 @@ echo "以sudo身份运行       sudo su -"
 sudo apt-get update && sudo apt-get upgrade
 echo "安装MongoDB"
 sudo apt dist-upgrade -y
-sudo apt install gnupg
+sudo apt-get install -y build-essential linux-headers-`uname -r` openssh-server apache2 mariadb-server mariadb-client mongodb-org  sqlite3 odbc-mariadb
+sudo apt-get install -y git curl sox lame dirmngr postfix gnupg gnupg2 apache2 nodejs npm python-dev automake autoconf pkg-config mpg123 bison flex ffmpeg 
+sudo apt-get install -y subversion dirmngr sendmail sendmail-bin unixodbc unixodbc-dev uuid uuid-dev util-linux
+sudo apt-get install -y libtoollibasound2-dev libapache2-mod-php7.4 libcurl4-openssl-dev libicu-dev libical-dev  libncurses5-dev libnewt-dev libneon27-dev libogg-dev libsrtp2-dev libspandsp-dev  libsqlite3-dev  libssl-dev libtool-bin libvorbis-dev libxml2-dev \ 
+sudo apt-get install -y php7.4 php7.4-{curl,cli,common,mysql,gd,mbstring,intl,xml,bcmath,fpm,gettext,imap,json,ldap,pdo,zip} php-pear
+sudo apt-get install -y asterisk lsb-release ca-certificates apt-transport-https software-properties-common 
+
 wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
 echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/5.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
 sudo apt update
-sudo apt install -y mongodb-org
 # sudo systemctl enable mongod
 sudo service mongod start
 sudo service mongod status
@@ -26,9 +31,8 @@ if [ $word = 1 ] ;then
 else
 	echo "开始安装MariaDB"
 fi
-sudo apt -y install mariadb-server mariadb-client
 sudo systemctl start mariadb
-sudo systemctl enable mariadb
+# sudo systemctl enable mariadb
 sudo mysql_secure_installation 
 if [ $? -eq 0 ]; then
     echo "MariaDB 成功"
@@ -40,7 +44,6 @@ else
     MariaDB 失败"
 fi
 echo "安装 nodejs"
-sudo apt install nodejs npm
 node --version
 if [ $? -eq 0 ]; then
     echo "nodejs 成功"
@@ -52,7 +55,6 @@ else
     nodejs 失败"
 fi
 echo "安装 依赖"
-apt install -y util-linux apache2 mariadb-server mariadb-client php php-curl php-cli php-pdo php-mysql php-pear php-gd php-mbstring php-intl php-bcmath curl sox mpg123 lame ffmpeg sqlite3 git unixodbc sudo dirmngr postfix asterisk odbc-mariadb php-ldap nodejs npm pkg-config libicu-dev
 if [ $? -eq 0 ]; then
     echo "依赖 成功"
     my = " ${my}
@@ -63,7 +65,6 @@ else
     依赖 失败"
 fi
 echo "安装 Apache2"
-sudo apt -y install apache2
 sudo cp /etc/apache2/apache2.conf /etc/apache2/apache2.conf_orig
 sudo sed -i 's/^\(User\|Group\).*/\1 asterisk/' /etc/apache2/apache2.conf
 sudo sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
@@ -79,16 +80,12 @@ else
     Apache2 失败"
 fi
 echo "安装 php4"
-sudo apt install -y lsb-release ca-certificates apt-transport-https software-properties-common gnupg2
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/sury-php.list
 wget -qO - https://packages.sury.org/php/apt.gpg | sudo apt-key add -
 sudo apt remove php*
 sudo apt -y install software-properties-common
 sudo add-apt-repository ppa:ondrej/php
 sudo apt-get update
-sudo apt -y install php7.4
-sudo apt install php7.4-{mysql,cli,common,imap,ldap,xml,fpm,curl,mbstring,zip,gd,gettext,xml,json}
-sudo apt install libapache2-mod-php7.4
 sudo sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php/7.4/apache2/php.ini
 sudo sed -i 's/\(^upload_max_filesize = \).*/\120M/' /etc/php/7.4/cli/php.ini
 sed -i 's/\(^memory_limit = \).*/\1256M/' /etc/php/7.4/apache2/php.ini
@@ -109,7 +106,7 @@ else
     php4 失败"
 fi
 echo "设置 Asterisk"
-apt install asterisk
+
 systemctl stop asterisk
 systemctl disable asterisk
 cd /etc/asterisk
@@ -158,14 +155,23 @@ Port = 3306
 Socket = /var/run/mysqld/mysqld.sock
 Option = 3
 EOF
-
 echo "安装 FreePBX"
-sudo apt install sox mpg123 lame ffmpeg sqlite3 git unixodbc dirmngr postfix  odbc-mariadb pkg-config libicu-dev
 cd /usr/local/src
 wget http://mirror.freepbx.org/modules/packages/freepbx/7.4/freepbx-16.0-latest.tgz
 tar zxvf freepbx-16.0-latest.tgz
 cd /usr/local/src/freepbx/
 ./start_asterisk start
+if [ $? -eq 0 ]; then
+    echo "start_asterisk 成功"
+    my = " ${my}
+    php4 成功"
+else
+    echo "start_asterisk 失败"
+    my = " ${my}
+    php4 失败"
+    exit
+fi
+
 ./install -n
 if [ $? -eq 0 ]; then
     echo "安装 FreePBX 成功"
