@@ -17,7 +17,8 @@ echo "$ip1 $newhostname      $newhostname" >>/etc/hosts
 sudo apt install net-tools git wget curl make vim lsof
 rm -rf .bashrc1
 mv ~/.bashrc ~/.bashrc1
-wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/.bashrc ~/.bashrc
+wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/.bashrc 
+mv .bashrc ~/.bashrc
 source ~/.bashrc
 echo -e "\n$(date "+%T") \t 脚本终止"
 
