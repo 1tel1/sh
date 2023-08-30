@@ -109,6 +109,7 @@ else
     php4 失败"
 fi
 echo "设置 Asterisk"
+apt install asterisk
 systemctl stop asterisk
 systemctl disable asterisk
 cd /etc/asterisk
