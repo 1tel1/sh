@@ -13,23 +13,23 @@ elif grep -Eqi "Fedora" /etc/issue || grep -Eq "Fedora" /etc/*-release; then
     PM='yum'
 elif grep -Eqi "Debian" /etc/issue || grep -Eq "Debian" /etc/*-release; then
     DISTRO='Debian'
-  wget https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
+  wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
   chmod +x debian.sh && ./debian.sh
 elif grep -Eqi "Ubuntu" /etc/issue || grep -Eq "Ubuntu" /etc/*-release; then
     DISTRO='Ubuntu'
-  wget https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
+  wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
   chmod +x debian.sh && ./debian.sh
 elif grep -Eqi "Raspbian" /etc/issue || grep -Eq "Raspbian" /etc/*-release; then
     DISTRO='Raspbian'
-  wget https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
+  wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
   chmod +x debian.sh && ./debian.sh
 else
     DISTRO='unknow'
 fi
 # if [ ${PM} ="apt" ]; then
-#   wget https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
+#   wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/debian.sh
 #   chmod +x debian.sh && ./debian.sh
 # elif [ ${PM} ="yum" ]; then
-#   wget https://raw.githubusercontent.com/1tel1/sh/main/centos.sh
+#   wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/centos.sh
 #   chmod +x centos.sh && ./centos.sh
 # fi
