@@ -76,3 +76,42 @@ USER = ovswitch
 PASSWORD = ovswitch123 
 
 EOF
+# Set owner and group to www-data
+chown -R www-data. /etc/freeswitch /var/lib/freeswitch \
+/var/log/freeswitch /usr/share/freeswitch \
+/var/log/nginx /var/www/html/portal
+
+# Directory permissions to 755 (u=rwx,g=rx,o='rx')
+find /etc/freeswitch -type d -exec chmod 755 {} \;
+find /var/lib/freeswitch -type d -exec chmod 755 {} \;
+find /var/log/freeswitch -type d -exec chmod 755 {} \;
+find /usr/share/freeswitch -type d -exec chmod 755 {} \;
+find /var/www/html/portal -type d -exec chmod 755 {} \;
+
+# File permissions to 644 (u=rw,g=r,o=r)
+find /etc/freeswitch -type f -exec chmod 644 {} \;
+find /var/lib/freeswitch -type f -exec chmod 644 {} \;
+find /var/log/freeswitch -type f -exec chmod 644 {} \;
+find /usr/share/freeswitch -type f -exec chmod 644 {} \;
+find /var/www/html/portal -type f -exec chmod 644 {} \;
+apt -y install firewalld
+systemctl enable firewalld
+systemctl start firewalld
+
+firewall-cmd --permanent --zone=public --add-service={http,https}
+firewall-cmd --permanent --zone=public --add-port={5060,5061}/tcp
+firewall-cmd --permanent --zone=public --add-port={5060,5061}/udp
+firewall-cmd --permanent --zone=public --add-port=16384-32768/udp
+firewall-cmd --reload
+firewall-cmd --list-all
+sed -i -e 's/daily/size 30M/g' /etc/logrotate.d/rsyslog
+sed -i -e 's/weekly/size 30M/g' /etc/logrotate.d/rsyslog
+sed -i -e 's/rotate 7/rotate 5/g' /etc/logrotate.d/rsyslog
+sed -i -e 's/weekly/size 30M/g' /etc/logrotate.d/php8.1-fpm
+sed -i -e 's/rotate 12/rotate 5/g' /etc/logrotate.d/php8.1-fpm
+sed -i -e 's/daily/size 30M/g' /etc/logrotate.d/nginx
+sed -i -e 's/rotate 14/rotate 5/g' /etc/logrotate.d/nginx
+sed -i -e 's/weekly/size 30M/g' /etc/logrotate.d/fail2ban
+systemctl daemon-reload
+systemctl enable freeswitch
+systemctl restart freeswitch
