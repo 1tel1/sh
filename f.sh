@@ -2,8 +2,9 @@
 sudo apt -y install software-properties-common
 sudo apt update && apt -y install git dbus at bc gcc g++ vim ntp make wget curl gawk nginx sqlite3 haveged ghostscript dirmngr  dnsutils mlocate fail2ban  whois 
 sudo apt -y install lsb-release libtiff5-dev libtiff-tools libxml2 libxml2-dev openssl libcurl4-openssl-dev  libreoffice dpkg-dev build-essential libhttpcore-java
-sudo apt -y install unixodbc unixodbc-dev net-tools  sensible-mda  lua5.1  gnupg2  ntpdate  gettext apt-transport-https ca-certificates
-
+sudo apt -y install unixodbc unixodbc-dev net-tools lua5.1  gnupg2  ntpdate  gettext apt-transport-https ca-certificates
+sudo apt -y install postfix  sensible-mda
+/etc/postfix/main.cf
 wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 sudo apt update && sudo apt -y install php8.1 
@@ -25,14 +26,14 @@ sudo wget --http-user=signalwire --http-password=$TOKEN -O /usr/share/keyrings/s
 echo "machine freeswitch.signalwire.com login signalwire password $TOKEN" > /etc/apt/auth.conf
 echo "deb [signed-by=/usr/share/keyrings/signalwire-freeswitch-repo.gpg] https://freeswitch.signalwire.com/repo/deb/debian-release/ `lsb_release -sc` main" > /etc/apt/sources.list.d/freeswitch.list
 echo "deb-src [signed-by=/usr/share/keyrings/signalwire-freeswitch-repo.gpg] https://freeswitch.signalwire.com/repo/deb/debian-release/ `lsb_release -sc` main" >> /etc/apt/sources.list.d/freeswitch.list
-sudo apt update && apt install -y freeswitch-meta-all
+sudo apt update && apt install -y freeswitch-config-vanilla freeswitch-lang-en freeswitch-lang-zh* freeswitch-sounds-zh*
 USER_PASSWORD=somepassword
 MYSQL_PASSWORD=existingmysqlpassword
 cd /opt
 git clone -b php81_fix https://github.moeyy.xyz/https://github.com/powerpbx/ASTPP.git
 cd /opt/ASTPP/web_interface
-wget https://kgithub.com/maxmind/GeoIP2-php/releases/download/v2.13.0/geoip2.phar
-wget https://kgithub.com/P3TERX/GeoLite.mmdb/releases/download/2023.09.01/GeoLite2-Country.mmdb
+wget https://ghproxy.com/https://github.com/maxmind/GeoIP2-php/releases/download/v2.13.0/geoip2.phar
+wget https://ghproxy.com/https://github.com/P3TERX/GeoLite.mmdb/releases/download/2023.09.01/GeoLite2-Country.mmdb
 mysql -p${MYSQL_PASSWORD} -e "CREATE DATABASE astpp;"
 mysql -p${MYSQL_PASSWORD} -e "CREATE USER 'astppuser'@'localhost' IDENTIFIED BY '${USER_PASSWORD}';"
 mysql -uroot -p${MYSQL_PASSWORD} -e "ALTER USER 'astppuser'@'localhost' \
