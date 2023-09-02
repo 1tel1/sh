@@ -10,7 +10,6 @@ wget -qO- get.docker.com | bash
 sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose  
 elif [ $word = 1 ] ; then
 curl -sSL https://get.daocloud.io/docker | sh  
-curl -L https://get.daocloud.io/docker/compose/releases/download/v2.1.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose  
 elif [ $word = 3 ] ; then
 sudo yum remove docker \
                   docker-client \
@@ -39,6 +38,7 @@ if [ $? -ne 0 ]; then
   sudo apt-get update
   sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 else
+curl -L https://ghproxy.com/https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-darwin-x86_64 -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose  
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
