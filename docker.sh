@@ -33,7 +33,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo chmod +x /usr/local/bin/docker-compose
-fi
+
 
 docker -v
 if [ $? -ne 0 ]; then
