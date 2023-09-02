@@ -33,7 +33,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 sudo systemctl enable docker
 sudo systemctl start docker
 sudo chmod +x /usr/local/bin/docker-compose
-
+sudo curl -L  https://ghproxy.com/https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-linux-x86_64 > /usr/local/bin/docker-compose
 
 docker -v
 if [ $? -ne 0 ]; then
