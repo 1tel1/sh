@@ -1,8 +1,9 @@
 import asyncio
-from nats.aio.client import Client as NATS
+from nats.aio.client 
+import Client as NATS
 
 # 定义NATS服务器地址
-nats_url = "nats://39.108.222.12:4222"
+nats_url = "nats://111.230.6.70:4222"
 
 # 定义XSwitch节点主题
 xswitch_node = "cn.xswitch.node.test"
@@ -15,7 +16,8 @@ requests = {}
 
 # 定义异步函数，用于处理收到的消息
 async def on_message(msg):
-global request_id, requests
+global request_id, 
+requests
 # 将消息转换为字典格式
 data = msg.data.decode()
 data = eval(data)
