@@ -26,6 +26,8 @@ apt update && apt upgrade -y
 删除未使用的依赖项：
 apt --purge autoremove
 apt --purge autoremove
+else
+echo "不升级"
 fi
 apt-get update
 apt-get -y upgrade
