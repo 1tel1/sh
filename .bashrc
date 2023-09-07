@@ -46,8 +46,11 @@ hei2 ()
  iptables -I INPUT -s "$1".0.0/16 -j DROP
  sudo ufw deny from "$1".0.0/16
 }
+hei() { iptables -I INPUT -s "$1"/24 -j DROP; }
+he() { iptables -A INPUT -s "$1" -j DROP; }
+bai() { iptables -A INPUT -s "$1"/24 -j ACCEPT; }
 
-bai ()
+bai1 ()
 {
  firewall-cmd --permanent --add-rich-rule="rule family="ipv4" source address="$1" accept"
  iptables -D INPUT -s "$1" -j DROP
