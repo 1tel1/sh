@@ -1,5 +1,31 @@
 #!/usr/bin/env bash
 echo -e "\n$(date "+%d-%m-%Y --- %T") --- Starting work\n"
+read -p "升级Debian12:1.升级Debian11:2，》》》》》》》》》" word
+if [ "$word" == 1 ] ;then
+sudo apt update
+sudo apt upgrade
+sudo apt full-upgrade
+sudo apt --purge autoremove
+sudo reboot
+sudo apt-mark showhold | more
+sudo apt-mark unhold <pkg-name>
+sudo cp -v /etc/apt/sources.list /opt/sources.list-bakup-debian11
+sudo sed -i 's/bullseye/bookworm/g' /etc/apt/sources.list
+sudo apt update
+echo "q和直接回车"
+sudo apt full-upgrade
+sudo apt full-upgrade
+sudo reboot
+lsb_release -a
+uname -rms
+sudo apt --purge autoremove
+
+elif [ "$word" == 2 ] ;then
+  apt update && apt upgrade -y
+删除未使用的依赖项：
+apt --purge autoremove
+apt --purge autoremove
+fi
 apt-get update
 apt-get -y upgrade
 apt-get -y autoremove
