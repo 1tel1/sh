@@ -36,7 +36,7 @@ echo "alias xup='cd /usr/local/xswitch && make up'" >> ~/.bashrc
 echo "alias xcli='cd /usr/local/xswitch && make cli'" >> ~/.bashrc
 echo "alias xnginx='cd /usr/local/xswitch && make bash-nginx'" >> ~/.bashrc
 echo "alias xenv='vim /usr/local/xswitch/.env'" >> ~/.bashrc
-source root/.bashrc
+sudo source root/.bashrc
 echo "$ip1:8081 用户:admin 密码： XSwitch.cn/6753997"
 rm -rf xswitch.sh
 alias
