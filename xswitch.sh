@@ -16,9 +16,11 @@ chmod +x /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 fi
 cd /usr/local
-wget wget https://xswitch.cn/download/xswitch-6.1.7.9.tar.gz --user xswitch --password password
+wget https://xswitch.cn/download/xswitch-6.1.7.9.tar.gz --user xswitch --password password
 tar zxvf xswitch-6.1.7.9.tar.gz -C /usr/local
-cd /usr/local/xswitch-6.1.7.9
+rm -rf xswitch-6.1.7.9.tar.gz
+mv /usr/local/xswitch-6.1.7.9 /usr/local/xswitch
+cd /usr/local/xswitch
 make setup
 ip1= curl ifconfig.me
 networkCard=`ifconfig | grep RUNNING |grep BROADCAST| awk -F ':' '{print $1}'`
@@ -28,7 +30,12 @@ sed 's/LOCAL_IP=192.168.0.1/LOCAL_IP=$ip' .env
 sed 's/NGINX_PROXY=192.168.0.1/NGINX_PROXY=$ip' .env
 make up
 make up-nginx
-echo "alias xswitch='cd /usr/local/xswitch-6.1.7.6'" >> ~/.bashrc
+echo "alias xswitch='cd /usr/local/xswitch && make bash'" >> ~/.bashrc
+echo "alias xdown='cd /usr/local/xswitch && make down'" >> ~/.bashrc
+echo "alias xup='cd /usr/local/xswitch && make up'" >> ~/.bashrc
+echo "alias xcli='cd /usr/local/xswitch && make cli'" >> ~/.bashrc
+echo "alias xnginx='cd /usr/local/xswitch && make bash-nginx'" >> ~/.bashrc
 source ~/.bashrc
 echo "$ip1:8081"
-echo "admin : XSwitch.cn/6753997"
+rm -rf xswitch.sh
+alias
