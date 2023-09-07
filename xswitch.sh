@@ -25,9 +25,9 @@ make setup
 ip1= curl ifconfig.me
 networkCard=`ifconfig | grep RUNNING |grep BROADCAST| awk -F ':' '{print $1}'`
 ip=`ifconfig "$networkCard"|grep inet|grep -v inet6|awk '{print $2}'`
-sed 's/EXT_IP=2.2.2.2/EXT_IP=$ip1/g' .env
-sed 's/LOCAL_IP=192.168.0.1/LOCAL_IP=$ip' .env
-sed 's/NGINX_PROXY=192.168.0.1/NGINX_PROXY=$ip' .env
+sed 's/EXT_IP=2.2.2.2/EXT_IP=$ip1/g' /usr/local/xswitch/.env
+sed 's/LOCAL_IP=192.168.0.1/LOCAL_IP=$ip/g' /usr/local/xswitch/.env
+sed 's/NGINX_PROXY=192.168.0.1/NGINX_PROXY=$ip/g' /usr/local/xswitch/.env
 make up
 make up-nginx
 echo "alias xswitch='cd /usr/local/xswitch && make bash'" >> ~/.bashrc
