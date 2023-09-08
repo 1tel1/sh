@@ -1,6 +1,6 @@
 #!/bin/bash
 apt-get update && apt-get install -y make zip wget
-docker-compose --version
+docker -v
 if [ $? -ne 0 ]; then
 apt-get remove docker docker-engine docker.io containerd runc
 apt-get update
@@ -49,18 +49,19 @@ make setup
 ip1= curl ifconfig.me
 read -p "公网IP：$ip1 ，如不正确请重新输入：" ip11
 if [ ${#ip11} -gt 2 ] ; then
-	ip1 = ${ip11} 
+	ip1 = $ip11
 fi
 
 networkCard=`ifconfig | grep RUNNING |grep BROADCAST| awk -F ':' '{print $1}'`
-ip=`ifconfig "$networkCard"|grep inet|grep -v inet6|awk '{print $2}'`
-read -p "内网IP：$ip ，如不正确请重新输入：" ip12
+ip2=`ifconfig "$networkCard"|grep inet|grep -v inet6|awk '{print $2}'`
+read -p "内网IP：$ip2 ，如不正确请重新输入：" ip12
 if [ ${#ip12} -gt 2 ] ; then
-	ip = ${ip12} 
+  ip2 = $ip12
 fi
+echo $ip2
 sed 's/EXT_IP=2.2.2.2/EXT_IP=$ip1/g' /usr/local/xswitch/.env
-sed 's/LOCAL_IP=192.168.0.1/LOCAL_IP=$ip/g' /usr/local/xswitch/.env
-sed 's/NGINX_PROXY=192.168.0.1/NGINX_PROXY=$ip/g' /usr/local/xswitch/.env
+sed 's/LOCAL_IP=192.168.0.1/LOCAL_IP=$ip2/g' /usr/local/xswitch/.env
+sed 's/NGINX_PROXY=192.168.0.1/NGINX_PROXY=$ip2/g' /usr/local/xswitch/.env
 make up
 make up-nginx
 echo "alias xswitch='cd /usr/local/xswitch && make bash'" >> ~/.bashrc
@@ -69,7 +70,6 @@ echo "alias xup='cd /usr/local/xswitch && make up'" >> ~/.bashrc
 echo "alias xcli='cd /usr/local/xswitch && make cli'" >> ~/.bashrc
 echo "alias xnginx='cd /usr/local/xswitch && make bash-nginx'" >> ~/.bashrc
 echo "alias xenv='vim /usr/local/xswitch/.env'" >> ~/.bashrc
-sudo source root/.bashrc
 echo "$ip1:8081 用户:admin 密码： XSwitch.cn/6753997"
 rm -rf xswitch.sh
 alias
