@@ -20,29 +20,12 @@ blue(){
 # Xswitch XCC下载
 function xcc(){
 git clone https://git.xswitch.cn/xswitch/xcc-examples.git
-cd xcc-examples.git
-}
-# ngrep 安装 抓包
-function xcc(){
-
+cd xcc-examples
 apt-get install ngrep
-
-
-}
-
-# nats 环境
-ngrep -p -q -Wbyline port 4222
-export NATS_URL=nats://43.138.132.2:4222
-export XSWITCH_SUBJECT=cn.xswitch.node.test
-export XCTRL_SUBJECT=cn.xswitch.ctrl
-# nodejs npm 安装 
-cd nodejs
 sudo apt install nodejs npm -y
-# cnpm 安装 
 npm install -g cnpm -registry=https://registry.npm.taobao.org
 sed -i '/npm/i cnpm' Makefile
 sed 's/npm/cnpm/g' Makefile
-# go  安装 
 wget https://golang.google.cn/dl/go1.21.1.linux-amd64.tar.gz
 tar -xvf go1.21.1.linux-amd64.tar.gz
 rm -rf go1.21.1.linux-amd64.tar.gz
@@ -52,19 +35,83 @@ echo "export GO_PATH=$HOME/go" >> ~/.bashrc
 echo "export PATH=${GO_HOME}/bin:$GO_PATH/bin:$PATH" >> ~/.bashrc
 source ~/.bashrc
 go env -w GOPROXY=https://goproxy.cn/,direct
+cnpm install
+}
+
+# ngrep 安装 抓包
+function ngrep(){
+  apt-get install ngrep
+}
+
+
+# nodejs npm 安装 
+function npm(){
+sudo apt install nodejs npm -y
+}
+# cnpm 安装 \
+function cnpm(){
+npm install -g cnpm -registry=https://registry.npm.taobao.org
+sed -i '/npm/i cnpm' Makefile
+sed 's/npm/cnpm/g' Makefile
+}
+# go  安装 
+function go(){
+wget https://golang.google.cn/dl/go1.21.1.linux-amd64.tar.gz
+tar -xvf go1.21.1.linux-amd64.tar.gz
+rm -rf go1.21.1.linux-amd64.tar.gz
+mv go* /usr/local/
+echo "export GO_HOME=/usr/local/go/" >> ~/.bashrc
+echo "export GO_PATH=$HOME/go" >> ~/.bashrc
+echo "export PATH=${GO_HOME}/bin:$GO_PATH/bin:$PATH" >> ~/.bashrc
+source ~/.bashrc
+go env -w GOPROXY=https://goproxy.cn/,direct
+}
+# nats 环境
+ngrep -p -q -Wbyline port 4222
+export NATS_URL=nats://43.138.132.2:4222
+export XSWITCH_SUBJECT=cn.xswitch.node.test
+export XCTRL_SUBJECT=cn.xswitch.ctrl
 # nats-server 安装 
-curl -L https://kgithub.com/nats-io/nats-server/releases/download/v2.9.22/nats-server-v2.9.22-linux-amd64.zip -o nats-server.zip
-unzip nats-server.zip -d nats-server
+function nats-server(){
+nats-server
 if [ $? -ne 0 ]; then
-mv nats-server*  nats-server
-wget https://ghproxy.com/https://github.com/nats-io/nats-server/releases/download/v2.9.22/nats-server-v2.9.22-linux-amd64.zip
-unzip nats-server-v2.9.22-linux-amd64.zip
-rm -rf nats-server-v2.9.22-linux-amd64.zip
-mv nats-server*  nats-server
+read "1：使用二进制安装；2：使用 docker 安装；>>>>>>>>>>>>>选择：" nnn1
+  if [ "$nnn1" == 1 ]; then
+  curl -L https://kgithub.com/nats-io/nats-server/releases/download/v2.9.22/nats-server-v2.9.22-linux-amd64.zip -o nats-server.zip
+  unzip nats-server.zip -d nats-server
+    if [ $? -ne 0 ]; then
+      rm -rf nats-server*
+      wget https://ghproxy.com/https://github.com/nats-io/nats-server/releases/download/v2.9.22/nats-server-v2.9.22-linux-amd64.zip
+      unzip nats-server-v2.9.22-linux-amd64.zip
+      rm -rf nats-server-v2.9.22-linux-amd64.zip
+      mv nats-server*  nats-server
+      sudo cp nats-server/nats-server /usr/bin
+      echo "alias nats-server='cd /usr/bin && nats-server'" >> ~/.bashrc
+    fi
+  elif [ "$nnn1" == 2 ]; then
+    docker run -p 4222:4222 -ti nats:latest
+  fi
+  wget https://ghproxy.com/https://raw.githubusercontent.com/1tel1/sh/main/nats-server.service
+  mv nats-server.service /etc/systemd/system/nats.service
 fi
-sudo cp nats-server/nats-server-vX.Y.Z-linux-amd64/nats-server /usr/bin
+}
+
 # nats cli 安装 
-go install github.com/nats-io/natscli/nats@latest
+function nats(){
+nats
+if [ $? -ne 0 ]; then
+  read "1：使用二进制安装；2：使用 go 安装；>>>>>>>>>>>>>选择：" nnn1
+  if [ "$nnn1" == 1 ]; then
+    wget https://ghproxy.com/https://github.com/nats-io/natscli/releases/download/v0.0.35/nats-0.0.35-linux-amd64.zip
+    unzip nats-0.0.35-linux-amd64.zip
+    rm -rf nats-0.0.35-linux-amd64.zip
+    mv nats-* nats
+    sudo cp nats/nats /usr/bin
+  elif [ "$nnn1" == 2 ]; then
+    go install github.com/nats-io/natscli/nats@latest
+  fi
+fi
+}
 # nats.js 安装 
 npm install nats@latest
 # nats.python 安装 
@@ -79,7 +126,7 @@ function start_menu(){
     green " HELP: https://www.blueskyxn.com/202104/4465.html "
     green " USE:  wget -O box.sh https://raw.githubusercontent.com/BlueSkyXN/SKY-BOX/main/box.sh && chmod +x box.sh && clear && ./box.sh "
     yellow " ======================Xswitch 类=========================="
-    green " 1. #Xswitch XCC 下载 " 
+    green " 1. Xswitch XCC 下载 " 
     green " 2. IPT.SH iptable一键脚本"
     green " 3. SpeedTest-Linux 下载"
     green " 4. Rclone&Fclone·下载" 
