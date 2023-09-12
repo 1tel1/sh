@@ -1,6 +1,15 @@
 #! /bin/bash  
-apt-get update && apt-get install -y wget vim  
+read -p "初始安装请输入1,docker升级2,docker-compose升级3,返回4》》》》》》》:" wor
+if [ $wor = 4 ] ; then
+ exit 0
+elif [ $wor = 2 ] ; then
 sudo apt-get remove docker-*
+elif [ $wor = 3 ] ; then
+rm -rf /usr/local/bin/docker-compose
+sudo curl -L  https://ghproxy.com/https://github.com/docker/compose/releases/download/v2.21.0/docker-compose-darwin-x86_64 > -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+apt-get update && apt-get install -y wget vim  
+fi
 sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
 read -p "国内服务器请输入1,国外2,centos 3》》》》》》》:" word
 if [ $word = 1 ] ; then
